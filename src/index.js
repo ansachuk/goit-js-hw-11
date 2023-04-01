@@ -8,6 +8,7 @@ import SimpleLightbox from 'simplelightbox/dist/simple-lightbox.esm';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
 // import {} from './js/scroll';
+import { fetchPhotos } from './js/fetch-images';
 
 const lightbox = new SimpleLightbox('.gallery a', {
   /* options */
@@ -15,3 +16,5 @@ const lightbox = new SimpleLightbox('.gallery a', {
 
 const searchFormRef = document.querySelector('#search-form');
 const galleryWrapperRef = document.querySelector('.gallery');
+
+fetchPhotos('cat');
