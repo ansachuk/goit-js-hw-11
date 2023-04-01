@@ -7,9 +7,19 @@ const ORIENTATION = "horizontal";
 const SAFE_SEARCH = "true";
 
 const searchParams = new URLSearchParams({
-  q: "cat",
+  key: USER_KEY,
+  image_type: IMAGE_TYPE,
+  orientation: ORIENTATION,
+  safesearch: true,
+  per_page: 40,
 });
 
-export function fetchPhotos(q) {
-  return fetch(`${BASE_URL}?key=${USER_KEY}&q=${q}`);
+export async function fetchPhotos(q) {
+  try {
+    const res = await fetch(`${BASE_URL}?${searchParams}&q=${q}`);
+    console.log(await res.json());
+    return await res.json();
+  } catch (error) {
+    console.log(error);
+  }
 }
