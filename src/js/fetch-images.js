@@ -10,13 +10,13 @@ const searchParams = new URLSearchParams({
   key: USER_KEY,
   image_type: IMAGE_TYPE,
   orientation: ORIENTATION,
-  safesearch: true,
+  safesearch: SAFE_SEARCH,
   per_page: 40,
 });
 
-export async function fetchPhotos(q) {
+export async function fetchPhotos(q, page) {
   try {
-    const res = await fetch(`${BASE_URL}?${searchParams}&q=${q}`);
+    const res = await fetch(`${BASE_URL}?${searchParams}&q=${q}&page=${page}`);
     console.log(await res.json());
     return await res.json();
   } catch (error) {

@@ -17,4 +17,6 @@ const lightbox = new SimpleLightbox(".gallery a", {
 const searchFormRef = document.querySelector("#search-form");
 const galleryWrapperRef = document.querySelector(".gallery");
 
-fetchPhotos("cat");
+let currentPage = 1;
+
+fetchPhotos("dog", currentPage);
