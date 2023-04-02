@@ -16,10 +16,10 @@ const searchParams = new URLSearchParams({
 
 export async function fetchPhotos(q, page) {
   try {
-    const res = await fetch(`${BASE_URL}?${searchParams}&q=${q}&page=${page}`);
-    console.log(await res.json());
-    return await res.json();
-  } catch (error) {
-    console.log(error);
-  }
+    const res = await axios.get(
+      `${BASE_URL}?${searchParams}&q=${q}&page=${page}`
+    );
+    console.log(res.data);
+    return res.data;
+  } catch (error) {}
 }
