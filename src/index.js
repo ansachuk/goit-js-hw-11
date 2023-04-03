@@ -102,5 +102,3 @@ async function onShowMoreClick(e) {
 
   makeSmoothScroll(1.5);
 }
-//<a href="${largeImageURL}">
-//</a>
