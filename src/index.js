@@ -3,7 +3,7 @@ import "./sass/index.scss";
 
 import { Notify } from "notiflix";
 
-import SimpleLightbox from "simplelightbox/dist/simple-lightbox.esm";
+import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 
 import { makeSmoothScroll } from "./js/scroll";
@@ -12,6 +12,7 @@ import { fetchPhotos } from "./js/fetch-images";
 const searchFormRef = document.querySelector("#search-form");
 const galleryWrapperRef = document.querySelector(".gallery");
 const showMoreBtnRef = document.querySelector(".show-more-btn");
+const lightbox = new SimpleLightbox(".gallery a");
 
 let currentPage = 1;
 let currentQuerry = "";
@@ -42,13 +43,11 @@ async function onFormSubmit(e) {
   console.log(photos.hits[0]);
   Notify.success(`Hooray! We found ${photos.totalHits} images.`);
 
-  const lightbox = new SimpleLightbox(".gallery a", {
-    /* options */
-  });
-
   showMoreBtnRef.style.display = "block";
 
   galleryWrapperRef.innerHTML = await makeGalleryElementsMarkup(photos.hits);
+  lightbox.refresh();
+
   makeSmoothScroll(0.3);
 }
 
@@ -63,10 +62,15 @@ function makeGalleryElementsMarkup(imagesArray) {
         views,
         comments,
         downloads,
-      }) => `
-
+      }) => `<a href="${largeImageURL}" class="large-img-link photo-card">
       <div class="photo-card">
-        <img width='400' heigth='300' src="${webformatURL}" alt="${tags}" loading="lazy" />
+        <img
+          width="400"
+          heigth="300"
+          src="${webformatURL}"
+          alt="${tags}"
+          loading="lazy"
+        />
         <div class="info">
           <p class="info-item"><b>Likes</b> ${likes}</p>
           <p class="info-item"><b>Views</b> ${views}</p>
@@ -74,8 +78,7 @@ function makeGalleryElementsMarkup(imagesArray) {
           <p class="info-item"><b>Downloads</b> ${downloads}</p>
         </div>
       </div>
-
-    `
+    </a>`
     )
     .join("");
 }
@@ -95,9 +98,9 @@ async function onShowMoreClick(e) {
     makeGalleryElementsMarkup(photos.hits)
   );
 
+  lightbox.refresh();
+
   makeSmoothScroll(1.5);
 }
 //<a href="${largeImageURL}">
-//</a>
-//<a href="${largeImageURL}" class="large-img-link photo-card">
 //</a>
