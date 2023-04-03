@@ -6,7 +6,7 @@ import { Notify } from "notiflix";
 import SimpleLightbox from "simplelightbox/dist/simple-lightbox.esm";
 import "simplelightbox/dist/simple-lightbox.min.css";
 
-// import {} from './js/scroll';
+import { makeSmoothScroll } from "./js/scroll";
 import { fetchPhotos } from "./js/fetch-images";
 
 const searchFormRef = document.querySelector("#search-form");
@@ -34,6 +34,8 @@ async function onFormSubmit(e) {
 
   if (!photos.hits.length) {
     Notify.failure("We not found matches!");
+    galleryWrapperRef.innerHTML = "";
+    showMoreBtnRef.style.display = "none";
     return;
   }
 
@@ -46,7 +48,8 @@ async function onFormSubmit(e) {
 
   showMoreBtnRef.style.display = "block";
 
-  galleryWrapperRef.innerHTML = makeGalleryElementsMarkup(photos.hits);
+  galleryWrapperRef.innerHTML = await makeGalleryElementsMarkup(photos.hits);
+  makeSmoothScroll(0.3);
 }
 
 function makeGalleryElementsMarkup(imagesArray) {
@@ -77,7 +80,23 @@ function makeGalleryElementsMarkup(imagesArray) {
     .join("");
 }
 
-function onShowMoreClick(e) {}
+async function onShowMoreClick(e) {
+  currentPage += 1;
+  const photos = await fetchPhotos(currentQuerry, currentPage);
+
+  if (!photos.hits.length) {
+    Notify.failure("Ooops...No images more!");
+    showMoreBtnRef.style.display = "none";
+    return;
+  }
+
+  galleryWrapperRef.insertAdjacentHTML(
+    "beforeend",
+    makeGalleryElementsMarkup(photos.hits)
+  );
+
+  makeSmoothScroll(1.5);
+}
 //<a href="${largeImageURL}">
 //</a>
 //<a href="${largeImageURL}" class="large-img-link photo-card">

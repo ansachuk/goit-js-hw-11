@@ -1,8 +1,10 @@
-export const { height: cardHeight } = document
-  .querySelector(".gallery")
-  .firstElementChild.getBoundingClientRect();
+export function makeSmoothScroll(coef) {
+  const { height: cardHeight } = document
+    .querySelector(".gallery")
+    .firstElementChild.getBoundingClientRect();
 
-window.scrollBy({
-  top: cardHeight * 2,
-  behavior: "smooth",
-});
+  window.scrollBy({
+    top: cardHeight * coef,
+    behavior: "smooth",
+  });
+}

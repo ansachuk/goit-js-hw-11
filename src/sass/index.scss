@@ -43,19 +43,18 @@
 
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
 
   margin-bottom: 30px;
 
   .photo-card {
     margin: 0 auto;
-    height: 300px;
-    width: 24%;
+    flex-basis: calc((100% - 8px * 3) / 4);
 
     img {
       display: block;
       height: 250px;
-      width: 346px;
+      width: 100%;
     }
   }
 }
@@ -72,6 +71,8 @@
 .show-more-btn {
   display: none;
   margin: 0 auto;
+
+  margin-bottom: 50px;
 
   border: none;
   border-radius: 10px;
