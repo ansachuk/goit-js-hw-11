@@ -45,6 +45,8 @@
   flex-wrap: wrap;
   gap: 10px;
 
+  margin-bottom: 30px;
+
   .photo-card {
     margin: 0 auto;
     height: 300px;
@@ -54,7 +56,6 @@
       display: block;
       height: 250px;
       width: 346px;
-      // object-fit: cover;
     }
   }
 }
@@ -65,5 +66,27 @@
 
   &-card {
     width: 20%;
+  }
+}
+
+.show-more-btn {
+  display: none;
+  margin: 0 auto;
+
+  border: none;
+  border-radius: 10px;
+  padding: 3px 10px;
+
+  color: teal;
+  background-color: bisque;
+
+  transition-property: color, background-color;
+  transition-duration: 250ms;
+  transition-timing-function: ease-in-out;
+
+  &:hover {
+    cursor: pointer;
+    color: whitesmoke;
+    background-color: tomato;
   }
 }

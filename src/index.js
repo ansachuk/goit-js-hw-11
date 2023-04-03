@@ -9,17 +9,15 @@ import "simplelightbox/dist/simple-lightbox.min.css";
 // import {} from './js/scroll';
 import { fetchPhotos } from "./js/fetch-images";
 
-const lightbox = new SimpleLightbox(".gallery a", {
-  /* options */
-});
-
 const searchFormRef = document.querySelector("#search-form");
 const galleryWrapperRef = document.querySelector(".gallery");
+const showMoreBtnRef = document.querySelector(".show-more-btn");
 
 let currentPage = 1;
 let currentQuerry = "";
 
 searchFormRef.addEventListener("submit", onFormSubmit);
+showMoreBtnRef.addEventListener("click", onShowMoreClick);
 
 async function onFormSubmit(e) {
   e.preventDefault();
@@ -38,8 +36,15 @@ async function onFormSubmit(e) {
     Notify.failure("We not found matches!");
     return;
   }
+
   console.log(photos.hits[0]);
   Notify.success(`Hooray! We found ${photos.totalHits} images.`);
+
+  const lightbox = new SimpleLightbox(".gallery a", {
+    /* options */
+  });
+
+  showMoreBtnRef.style.display = "block";
 
   galleryWrapperRef.innerHTML = makeGalleryElementsMarkup(photos.hits);
 }
@@ -71,6 +76,8 @@ function makeGalleryElementsMarkup(imagesArray) {
     )
     .join("");
 }
+
+function onShowMoreClick(e) {}
 //<a href="${largeImageURL}">
 //</a>
 //<a href="${largeImageURL}" class="large-img-link photo-card">
